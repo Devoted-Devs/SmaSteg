@@ -26,7 +26,7 @@ export class BlogFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const user = this.authService.currentUserValue;
+    const user = this.authService.currentUser();
     this.authorName = user?.name || '';
 
     // Check if we're in edit mode

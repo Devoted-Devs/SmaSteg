@@ -1,20 +1,20 @@
 <div class="blog-container">
   <div class="blog-header">
     <h1>Blog Posts</h1>
-    <button *ngIf="isTeacher" class="btn btn-primary" (click)="createPost()">
+    <button *ngIf="authService.isTeacher()" class="btn btn-primary" (click)="createPost()">
       Create New Post
     </button>
   </div>
 
   <div class="posts-list">
-    <div *ngIf="posts.length === 0" class="no-posts">
+    <div *ngIf="blogPostService.posts().length === 0" class="no-posts">
       <p>No blog posts yet. Teachers can create the first post!</p>
     </div>
 
-    <div *ngFor="let post of posts" class="post-card">
+    <div *ngFor="let post of blogPostService.posts()" class="post-card">
       <div class="post-header">
         <h2>{{ post.title }}</h2>
-        <div class="post-actions" *ngIf="isTeacher">
+        <div class="post-actions" *ngIf="authService.isTeacher()">
           <button class="btn btn-edit" (click)="editPost(post.id)">Edit</button>
           <button class="btn btn-delete" (click)="deletePost(post.id)">Delete</button>
         </div>

@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { BlogPostService } from '../../services/blog-post.service';
 import { AuthService } from '../../services/auth.service';
-import { BlogPost } from '../../models/blog-post.model';
 
 @Component({
     selector: 'app-blog-list',
@@ -11,22 +10,12 @@ import { BlogPost } from '../../models/blog-post.model';
     templateUrl: './blog-list.component.html',
     styleUrl: './blog-list.component.css'
 })
-export class BlogListComponent implements OnInit {
-  posts: BlogPost[] = [];
-  isTeacher = false;
-
+export class BlogListComponent {
   constructor(
-    private blogPostService: BlogPostService,
-    private authService: AuthService,
+    public blogPostService: BlogPostService,
+    public authService: AuthService,
     private router: Router
   ) {}
-
-  ngOnInit(): void {
-    this.blogPostService.posts.subscribe(posts => {
-      this.posts = posts;
-    });
-    this.isTeacher = this.authService.isTeacher();
-  }
 
   createPost(): void {
     this.router.navigate(['/blog/create']);

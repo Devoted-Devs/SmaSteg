@@ -1,14 +1,15 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Injectable, signal, computed } from '@angular/core';
 import { BlogPost } from '../models/blog-post.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BlogPostService {
-  private postsSubject: BehaviorSubject<BlogPost[]>;
-  public posts: Observable<BlogPost[]>;
+  private postsSignal = signal<BlogPost[]>([]);
   private nextId: number;
+
+  // Public readonly signal
+  public posts = this.postsSignal.asReadonly();
 
   // Mock blog posts database
   private mockPosts: BlogPost[] = [
@@ -54,20 +55,19 @@ export class BlogPostService {
       ? Math.max(...initialPosts.map((p: BlogPost) => p.id)) + 1 
       : 1;
 
-    this.postsSubject = new BehaviorSubject<BlogPost[]>(initialPosts);
-    this.posts = this.postsSubject.asObservable();
+    this.postsSignal.set(initialPosts);
   }
 
   private savePosts(): void {
-    localStorage.setItem('blogPosts', JSON.stringify(this.postsSubject.value));
+    localStorage.setItem('blogPosts', JSON.stringify(this.postsSignal()));
   }
 
   getAllPosts(): BlogPost[] {
-    return this.postsSubject.value;
+    return this.postsSignal();
   }
 
   getPostById(id: number): BlogPost | undefined {
-    return this.postsSubject.value.find(post => post.id === id);
+    return this.postsSignal().find(post => post.id === id);
   }
 
   createPost(title: string, content: string, author: string): void {
@@ -80,13 +80,13 @@ export class BlogPostService {
       updatedAt: new Date()
     };
 
-    const currentPosts = this.postsSubject.value;
-    this.postsSubject.next([newPost, ...currentPosts]);
+    const currentPosts = this.postsSignal();
+    this.postsSignal.set([newPost, ...currentPosts]);
     this.savePosts();
   }
 
   updatePost(id: number, title: string, content: string): void {
-    const posts = this.postsSubject.value;
+    const posts = [...this.postsSignal()];
     const postIndex = posts.findIndex(post => post.id === id);
 
     if (postIndex !== -1) {
@@ -96,14 +96,14 @@ export class BlogPostService {
         content,
         updatedAt: new Date()
       };
-      this.postsSubject.next([...posts]);
+      this.postsSignal.set(posts);
       this.savePosts();
     }
   }
 
   deletePost(id: number): void {
-    const posts = this.postsSubject.value.filter(post => post.id !== id);
-    this.postsSubject.next(posts);
+    const posts = this.postsSignal().filter(post => post.id !== id);
+    this.postsSignal.set(posts);
     this.savePosts();
   }
 }

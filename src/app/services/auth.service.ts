@@ -1,13 +1,19 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Injectable, signal, computed } from '@angular/core';
 import { User, UserRole } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private currentUserSubject: BehaviorSubject<User | null>;
-  public currentUser: Observable<User | null>;
+  private currentUserSignal = signal<User | null>(null);
+  
+  // Public readonly signal
+  public currentUser = this.currentUserSignal.asReadonly();
+  
+  // Computed signals for derived state
+  public isLoggedIn = computed(() => this.currentUserSignal() !== null);
+  public isTeacher = computed(() => this.currentUserSignal()?.role === 'TEACHER');
+  public isParent = computed(() => this.currentUserSignal()?.role === 'PARENT');
 
   // Mock users database
   // NOTE: This is for demonstration purposes only. In a production application,
@@ -31,14 +37,9 @@ export class AuthService {
 
   constructor() {
     const storedUser = localStorage.getItem('currentUser');
-    this.currentUserSubject = new BehaviorSubject<User | null>(
-      storedUser ? JSON.parse(storedUser) : null
-    );
-    this.currentUser = this.currentUserSubject.asObservable();
-  }
-
-  public get currentUserValue(): User | null {
-    return this.currentUserSubject.value;
+    if (storedUser) {
+      this.currentUserSignal.set(JSON.parse(storedUser));
+    }
   }
 
   login(username: string, password: string): boolean {
@@ -51,7 +52,7 @@ export class AuthService {
       const userToStore = { ...user };
       delete (userToStore as any).password;
       localStorage.setItem('currentUser', JSON.stringify(userToStore));
-      this.currentUserSubject.next(userToStore);
+      this.currentUserSignal.set(userToStore);
       return true;
     }
     return false;
@@ -59,22 +60,15 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('currentUser');
-    this.currentUserSubject.next(null);
-  }
-
-  isLoggedIn(): boolean {
-    return this.currentUserValue !== null;
+    this.currentUserSignal.set(null);
   }
 
   hasRole(role: UserRole): boolean {
-    return this.currentUserValue?.role === role;
+    return this.currentUserSignal()?.role === role;
   }
 
-  isTeacher(): boolean {
-    return this.hasRole('TEACHER');
-  }
-
-  isParent(): boolean {
-    return this.hasRole('PARENT');
+  getUserInfo(): string {
+    const user = this.currentUserSignal();
+    return user ? `${user.name} (${user.role})` : '';
   }
 }
