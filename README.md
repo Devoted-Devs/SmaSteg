@@ -89,6 +89,10 @@ src/
 ## License
 ISC
 
+## Security
+
+Please see [SECURITY.md](SECURITY.md) for information about known vulnerabilities and mitigation strategies.
+
 ---
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.17.
