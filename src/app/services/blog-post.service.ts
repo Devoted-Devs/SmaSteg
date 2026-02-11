@@ -8,7 +8,7 @@ import { BlogPost } from '../models/blog-post.model';
 export class BlogPostService {
   private postsSubject: BehaviorSubject<BlogPost[]>;
   public posts: Observable<BlogPost[]>;
-  private nextId = 4;
+  private nextId: number;
 
   // Mock blog posts database
   private mockPosts: BlogPost[] = [
@@ -48,6 +48,11 @@ export class BlogPostService {
       post.createdAt = new Date(post.createdAt);
       post.updatedAt = new Date(post.updatedAt);
     });
+
+    // Calculate nextId based on the maximum ID in posts
+    this.nextId = initialPosts.length > 0 
+      ? Math.max(...initialPosts.map((p: BlogPost) => p.id)) + 1 
+      : 1;
 
     this.postsSubject = new BehaviorSubject<BlogPost[]>(initialPosts);
     this.posts = this.postsSubject.asObservable();

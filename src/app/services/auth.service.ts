@@ -10,6 +10,8 @@ export class AuthService {
   public currentUser: Observable<User | null>;
 
   // Mock users database
+  // NOTE: This is for demonstration purposes only. In a production application,
+  // passwords should be hashed and authentication should be handled server-side.
   private users: User[] = [
     {
       id: 1,

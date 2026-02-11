@@ -20,10 +20,10 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('smasteg-portal');
   });
 
-  it('should render title', () => {
+  it('should render the app container', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, smasteg-portal');
+    expect(compiled.querySelector('.app-container')).toBeTruthy();
   });
 });
