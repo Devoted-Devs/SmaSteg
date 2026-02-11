@@ -1,0 +1,15 @@
+<div class="app-container">
+  <nav class="navbar" *ngIf="isLoggedIn">
+    <div class="nav-content">
+      <h1 class="logo">🎨 Preschool Portal</h1>
+      <div class="nav-menu">
+        <span class="user-info">{{ getUserInfo() }}</span>
+        <button class="btn-logout" (click)="logout()">Logout</button>
+      </div>
+    </div>
+  </nav>
+  
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>
