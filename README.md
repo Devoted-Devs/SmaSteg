@@ -1,0 +1,2 @@
+# SmaSteg
+Preschool portal
