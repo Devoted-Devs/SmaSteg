@@ -6,11 +6,10 @@ import { AuthService } from '../../services/auth.service';
 import { BlogPost } from '../../models/blog-post.model';
 
 @Component({
-  selector: 'app-blog-list',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './blog-list.component.html',
-  styleUrl: './blog-list.component.css'
+    selector: 'app-blog-list',
+    imports: [CommonModule],
+    templateUrl: './blog-list.component.html',
+    styleUrl: './blog-list.component.css'
 })
 export class BlogListComponent implements OnInit {
   posts: BlogPost[] = [];

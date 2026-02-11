@@ -6,11 +6,10 @@ import { BlogPostService } from '../../services/blog-post.service';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
-  selector: 'app-blog-form',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './blog-form.component.html',
-  styleUrl: './blog-form.component.css'
+    selector: 'app-blog-form',
+    imports: [CommonModule, FormsModule],
+    templateUrl: './blog-form.component.html',
+    styleUrl: './blog-form.component.css'
 })
 export class BlogFormComponent implements OnInit {
   title = '';
