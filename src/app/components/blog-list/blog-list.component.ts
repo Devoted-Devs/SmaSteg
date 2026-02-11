@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
 import { BlogPostService } from '../../services/blog-post.service';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'app-blog-list',
-    imports: [CommonModule],
+    imports: [],
     templateUrl: './blog-list.component.html',
     styleUrl: './blog-list.component.css'
 })
