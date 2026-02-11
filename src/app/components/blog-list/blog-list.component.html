@@ -1,0 +1,46 @@
+<div class="blog-container">
+  <div class="blog-header">
+    <h1>Blog Posts</h1>
+    @if (authService.isTeacher()) {
+      <button class="btn btn-primary" (click)="createPost()">
+        Create New Post
+      </button>
+    }
+  </div>
+
+  <div class="posts-list">
+    @if (blogPostService.posts().length === 0) {
+      <div class="no-posts">
+        <p>No blog posts yet. Teachers can create the first post!</p>
+      </div>
+    }
+
+    @for (post of blogPostService.posts(); track post.id) {
+      <div class="post-card">
+        <div class="post-header">
+          <h2>{{ post.title }}</h2>
+          @if (authService.isTeacher()) {
+            <div class="post-actions">
+              <button class="btn btn-edit" (click)="editPost(post.id)">Edit</button>
+              <button class="btn btn-delete" (click)="deletePost(post.id)">Delete</button>
+            </div>
+          }
+        </div>
+        
+        <div class="post-meta">
+          <span class="author">By {{ post.author }}</span>
+          <span class="date">{{ formatDate(post.createdAt) }}</span>
+          @if (post.createdAt !== post.updatedAt) {
+            <span class="updated">
+              (Updated: {{ formatDate(post.updatedAt) }})
+            </span>
+          }
+        </div>
+        
+        <div class="post-content">
+          {{ post.content }}
+        </div>
+      </div>
+    }
+  </div>
+</div>

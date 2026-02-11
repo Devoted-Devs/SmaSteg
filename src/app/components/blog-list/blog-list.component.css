@@ -1,0 +1,137 @@
+.blog-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.blog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.blog-header h1 {
+  margin: 0;
+  color: #333;
+}
+
+.posts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.no-posts {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+  font-size: 18px;
+}
+
+.post-card {
+  background: white;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.post-header h2 {
+  margin: 0;
+  color: #333;
+  font-size: 24px;
+  flex: 1;
+}
+
+.post-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.post-meta {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+  color: #666;
+  font-size: 14px;
+}
+
+.author {
+  font-weight: 600;
+}
+
+.date,
+.updated {
+  font-style: italic;
+}
+
+.post-content {
+  line-height: 1.6;
+  color: #555;
+  font-size: 16px;
+  white-space: pre-wrap;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.btn-primary {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #45a049;
+}
+
+.btn-edit {
+  background-color: #2196F3;
+  color: white;
+}
+
+.btn-edit:hover {
+  background-color: #0b7dda;
+}
+
+.btn-delete {
+  background-color: #f44336;
+  color: white;
+}
+
+.btn-delete:hover {
+  background-color: #da190b;
+}
+
+@media (max-width: 768px) {
+  .blog-header {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+  }
+
+  .post-header {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .post-actions {
+    width: 100%;
+  }
+
+  .btn {
+    flex: 1;
+  }
+}
